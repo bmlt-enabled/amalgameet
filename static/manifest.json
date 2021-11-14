@@ -1,0 +1,17 @@
+{
+  "background_color": "#8c9b9d",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#8c9b9d",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Amalgameet",
+  "short_name": "Amalgameet",
+  "description": "Amalgameet",
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://amalgameet.org/manifest.json"
+    }
+  ]
+}
