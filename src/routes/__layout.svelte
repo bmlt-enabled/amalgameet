@@ -29,7 +29,7 @@
 
 <svelte:window on:click={documentClick} />
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">Amalgameet</a>
 
@@ -64,9 +64,11 @@
     <slot />
 </section>
 
-<style>
-    .navbar-menu.is-active {
-        position: absolute;
-        width: 100%;
+<style lang="scss">
+    .navbar-menu {
+        &.is-active {
+            position: absolute;
+            width: 100%;
+        }
     }
 </style>
