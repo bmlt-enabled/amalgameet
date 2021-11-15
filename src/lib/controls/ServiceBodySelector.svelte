@@ -20,8 +20,10 @@
         if (serviceBodyID) {
             let foundServiceBody: ServiceBody;
             for (const sb of $serviceBodies) {
-                foundServiceBody = sb;
-                break;
+                if (sb.id === serviceBodyID) {
+                    foundServiceBody = sb;
+                    break;
+                }
             }
             $selectedServiceBody = foundServiceBody || null;
         }
