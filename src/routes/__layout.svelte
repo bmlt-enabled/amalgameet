@@ -53,7 +53,7 @@
                     <a class="navbar-item" href="/about" on:click={linkClick}>About</a>
                     <a class="navbar-item" href="/contact" on:click={linkClick}>Contact</a>
                     <hr class="navbar-divider" />
-                    <a class="navbar-item" href="/report-issue" on:click={linkClick}>Report an issue</a>
+                    <a class="navbar-item" href="/report-issue" on:click={linkClick}>Report an Issue</a>
                 </div>
             </div>
         </div>
