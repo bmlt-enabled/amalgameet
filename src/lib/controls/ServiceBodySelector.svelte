@@ -11,7 +11,6 @@
     }
 
     onMount(() => {
-        // TODO: put a fetch here to select the service bodies remotely
         serviceBodies.initialize();
     });
 
