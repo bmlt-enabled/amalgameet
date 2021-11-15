@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { serviceBody } from '$lib/stores';
+    import { selectedServiceBody } from '$lib/stores';
 </script>
 
-{#if $serviceBody}
+{#if $selectedServiceBody}
     <div class="block">
-        Selected Service Body: {$serviceBody.name}
+        Selected Service Body: {$selectedServiceBody.name}
     </div>
 {/if}

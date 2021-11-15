@@ -1,20 +1,28 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { serviceBody } from '$lib/stores';
-    import { getServiceBodyID } from '$lib/localStorage';
-    import type { ServiceBody } from '$lib/ServiceBody';
+    import { serviceBodies, selectedServiceBody } from '$lib/stores';
+    import { getSelectedServiceBodyID } from '$lib/localStorage';
 
-    export let serviceBodies: ServiceBody[];
+    $: {
+        if ($serviceBodies) {
+            setSelectedServiceBody();
+        }
+    }
 
     onMount(() => {
-        const serviceBodyID = getServiceBodyID();
+        // TODO: put a fetch here to select the service bodies remotely
+        serviceBodies.initialize();
+    });
+
+    function setSelectedServiceBody() {
+        const serviceBodyID = getSelectedServiceBodyID();
         if (serviceBodyID) {
-            for (const sb of serviceBodies) {
-                $serviceBody = sb;
+            for (const sb of $serviceBodies) {
+                $selectedServiceBody = sb;
                 break;
             }
         }
-    });
+    }
 </script>
 
 <div class="field is-horizontal">
@@ -22,11 +30,13 @@
         <div class="field">
             <div class="control is-expanded">
                 <div class="select is-fullwidth">
-                    <select bind:value={$serviceBody}>
+                    <select bind:value={$selectedServiceBody}>
                         <option value={null} disabled selected>Select a Region</option>
-                        {#each serviceBodies as serviceBody}
-                            <option value={serviceBody}>{serviceBody.name}</option>
-                        {/each}
+                        {#if $serviceBodies}
+                            {#each $serviceBodies as serviceBody}
+                                <option value={serviceBody}>{serviceBody.name}</option>
+                            {/each}
+                        {/if}
                     </select>
                 </div>
             </div>

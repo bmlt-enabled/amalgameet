@@ -1,13 +1,27 @@
-import { writable } from 'svelte/store';
-import type { Writable } from 'svelte/store';
-import { setServiceBodyID } from './localStorage';
-import type { ServiceBody } from '$lib/ServiceBody';
+import { get, writable } from 'svelte/store';
+import type { Readable, Writable } from 'svelte/store';
+import { setSelectedServiceBodyID } from '$lib/localStorage';
+import { ServiceBody } from '$lib/ServiceBody';
 
-const serviceBodyStore: Writable<ServiceBody> = writable(null);
-export const serviceBody = {
-    subscribe: serviceBodyStore.subscribe,
+const selectedServiceBodyStore: Writable<ServiceBody> = writable(null);
+export const selectedServiceBody = {
+    subscribe: selectedServiceBodyStore.subscribe,
     set: (serviceBody: ServiceBody) => {
-        setServiceBodyID(serviceBody.id);
-        serviceBodyStore.set(serviceBody);
+        setSelectedServiceBodyID(serviceBody.id);
+        selectedServiceBodyStore.set(serviceBody);
+    }
+};
+
+export interface ServiceBodiesStore extends Readable<ServiceBody[]> {
+    initialize(): void;
+}
+const serviceBodiesStore: Writable<ServiceBody[]> = writable(null);
+export const serviceBodies: ServiceBodiesStore = {
+    subscribe: serviceBodiesStore.subscribe,
+    initialize: () => {
+        if (get(serviceBodiesStore) === null) {
+            // TODO: fetch this from some server
+            serviceBodiesStore.set([new ServiceBody(1, 'Carolina Region'), new ServiceBody(2, 'New England Region')]);
+        }
     }
 };
