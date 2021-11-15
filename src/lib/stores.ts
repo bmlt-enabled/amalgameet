@@ -7,7 +7,9 @@ const selectedServiceBodyStore: Writable<ServiceBody> = writable(null);
 export const selectedServiceBody = {
     subscribe: selectedServiceBodyStore.subscribe,
     set: (serviceBody: ServiceBody) => {
-        setSelectedServiceBodyID(serviceBody.id);
+        if (serviceBody) {
+            setSelectedServiceBodyID(serviceBody.id);
+        }
         selectedServiceBodyStore.set(serviceBody);
     }
 };
