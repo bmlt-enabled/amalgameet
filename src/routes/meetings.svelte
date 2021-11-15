@@ -7,6 +7,6 @@
     <div class="block">
         <ServiceBodySelector />
     </div>
-    <h4 class="title is-4">Events</h4>
+    <h4 class="title is-4">Meetings</h4>
     <Meetings />
 </div>
