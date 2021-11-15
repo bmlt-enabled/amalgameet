@@ -18,17 +18,18 @@ export interface ServiceBodiesStore extends Readable<ServiceBody[]> {
 const serviceBodiesStore: Writable<ServiceBody[]> = writable(null);
 export const serviceBodies: ServiceBodiesStore = {
     subscribe: serviceBodiesStore.subscribe,
-    initialize: () => {
+    initialize: async () => {
         if (get(serviceBodiesStore) === null) {
-            const fetchOptions = { headers: { 'user-agent': navigator.userAgent + ' +amalgameet' } };
-            fetch(`https://s3.amazonaws.com/archives.bmlt.app/data/service-bodies.json`, fetchOptions)
-                .then((response) => response.json())
-                .then((serviceBodiesJson: any[]) => serviceBodiesJson.map((sb) => new ServiceBody(sb.id, sb.name)))
-                .then((serviceBodies) => serviceBodiesStore.set(serviceBodies))
-                .catch((error) => {
-                    // TODO
-                    console.log('Error:', error);
-                });
+            try {
+                const url = 'https://s3.amazonaws.com/archives.bmlt.app/data/service-bodies.json';
+                const response = await fetch(url);
+                const serviceBodiesJson = (await response.json()) as any[];
+                const _serviceBodies = serviceBodiesJson.map((sb) => new ServiceBody(sb.id, sb.name));
+                serviceBodiesStore.set(_serviceBodies);
+            } catch (error) {
+                // TODO
+                console.log('Error:', error);
+            }
         }
     }
 };
