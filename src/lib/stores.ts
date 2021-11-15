@@ -20,8 +20,15 @@ export const serviceBodies: ServiceBodiesStore = {
     subscribe: serviceBodiesStore.subscribe,
     initialize: () => {
         if (get(serviceBodiesStore) === null) {
-            // TODO: fetch this from some server
-            serviceBodiesStore.set([new ServiceBody(1, 'Carolina Region'), new ServiceBody(2, 'New England Region')]);
+            const fetchOptions = { headers: { 'user-agent': navigator.userAgent + ' +amalgameet' } };
+            fetch(`https://s3.amazonaws.com/archives.bmlt.app/data/service-bodies.json`, fetchOptions)
+                .then((response) => response.json())
+                .then((serviceBodiesJson: any[]) => serviceBodiesJson.map((sb) => new ServiceBody(sb.id, sb.name)))
+                .then((serviceBodies) => serviceBodiesStore.set(serviceBodies))
+                .catch((error) => {
+                    // TODO
+                    console.log('Error:', error);
+                });
         }
     }
 };
