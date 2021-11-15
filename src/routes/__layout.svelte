@@ -1,11 +1,10 @@
 <script lang="ts">
+    import { page } from '$app/stores';
     import '../app.scss';
 
     let isMenuActive = false;
 
     function documentClick(event: Event) {
-        console.log('clicked');
-        console.log('isMenuActive: ' + isMenuActive.toString());
         if (isMenuActive) {
             const target = event.target as Element;
             for (const className of target.classList || []) {
@@ -18,7 +17,6 @@
     }
 
     function navBarClick() {
-        console.log('navBarClick');
         isMenuActive = !isMenuActive;
     }
 
@@ -27,11 +25,17 @@
     }
 </script>
 
+<svelte:head>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Amalgameet</title>
+</svelte:head>
 <svelte:window on:click={documentClick} on:touchend={documentClick} />
 
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="/">Amalgameet</a>
+        <a class="navbar-item" class:has-text-weight-bold={$page.path === '/'} href="/">Amalgameet</a>
 
         <a role="button" class="navbar-burger" class:is-active={isMenuActive} aria-label="menu" aria-expanded="false" on:click={navBarClick} href={'javascript:void(0)'}>
             <!-- navbar-span class prevents bodyClick from closing the navbar -->
@@ -43,24 +47,24 @@
 
     <div id="navbarBasicExample" class="navbar-menu" class:is-active={isMenuActive}>
         <div class="navbar-start">
-            <a class="navbar-item" href="/events" on:click={linkClick}>Events</a>
-            <a class="navbar-item" href="/meetings" on:click={linkClick}>Meetings</a>
+            <a class="navbar-item" class:has-text-weight-bold={$page.path.startsWith('/events')} href="/events" on:click={linkClick}>Events</a>
+            <a class="navbar-item" class:has-text-weight-bold={$page.path.startsWith('/meetings')} href="/meetings" on:click={linkClick}>Meetings</a>
 
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link" href={'javascript:void(0)'}>More</a>
 
                 <div class="navbar-dropdown">
-                    <a class="navbar-item" href="/about" on:click={linkClick}>About</a>
-                    <a class="navbar-item" href="/contact" on:click={linkClick}>Contact</a>
+                    <a class="navbar-item" class:has-text-weight-bold={$page.path.startsWith('/about')} href="/about" on:click={linkClick}>About</a>
+                    <a class="navbar-item" class:has-text-weight-bold={$page.path.startsWith('/contact')} href="/contact" on:click={linkClick}>Contact</a>
                     <hr class="navbar-divider" />
-                    <a class="navbar-item" href="/report-issue" on:click={linkClick}>Report an Issue</a>
+                    <a class="navbar-item" class:has-text-weight-bold={$page.path.startsWith('/report-issue')} href="/report-issue" on:click={linkClick}>Report an Issue</a>
                 </div>
             </div>
         </div>
     </div>
 </nav>
 
-<section class="section">
+<section class="section p-5">
     <slot />
 </section>
 

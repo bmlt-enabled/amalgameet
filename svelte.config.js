@@ -8,7 +8,7 @@ const config = {
     target: '#svelte',
 
     adapter: adapter({
-      fallback: 'index.html'
+      fallback: '404.html'
     }),
 
     vite: {
