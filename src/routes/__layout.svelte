@@ -27,13 +27,13 @@
     }
 </script>
 
-<svelte:window on:click={documentClick} />
+<svelte:window on:click={documentClick} on:touchend={documentClick} />
 
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">Amalgameet</a>
 
-        <a role="button" class="navbar-burger" class:is-active={isMenuActive} aria-label="menu" aria-expanded="false" on:click={() => navBarClick()} href={'javascript:void(0)'}>
+        <a role="button" class="navbar-burger" class:is-active={isMenuActive} aria-label="menu" aria-expanded="false" on:click={navBarClick} href={'javascript:void(0)'}>
             <!-- navbar-span class prevents bodyClick from closing the navbar -->
             <span class="navbar-span" aria-hidden="true" />
             <span class="navbar-span" aria-hidden="true" />
