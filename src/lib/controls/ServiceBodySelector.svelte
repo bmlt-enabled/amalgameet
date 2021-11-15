@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { serviceBodies, selectedServiceBody } from '$lib/stores';
     import { getSelectedServiceBodyID } from '$lib/localStorage';
+    import type { ServiceBody } from '$lib/ServiceBody';
 
     $: {
         if ($serviceBodies) {
@@ -17,10 +18,12 @@
     function setSelectedServiceBody() {
         const serviceBodyID = getSelectedServiceBodyID();
         if (serviceBodyID) {
+            let foundServiceBody: ServiceBody;
             for (const sb of $serviceBodies) {
-                $selectedServiceBody = sb;
+                foundServiceBody = sb;
                 break;
             }
+            $selectedServiceBody = foundServiceBody || null;
         }
     }
 </script>
